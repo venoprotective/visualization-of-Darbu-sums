@@ -10,9 +10,13 @@
 
 1. Клонируйте репозиторий или скачайте файл `plotDarbuSums.py`
 
-2. Установите необходимые зависимости:
+2. Установите необходимые зависимости(Windows):
 ```bash
-pip install matplotlib numpy
+python -m venv venv
+
+venv/Scripts/activate
+
+pip install -r requirements.txt
 ```
 
 ## Запуск
@@ -28,3 +32,4 @@ python plotDarbuSums.py
 При движении слайдера автоматически пересчитываются и перерисовываются прямоугольники Дарбу
 
 В левом верхнем углу отображаются текущие значения сумм
+
