@@ -16,7 +16,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 plt.subplots_adjust(bottom=0.2) # место расположения слайдера
 
 # сам график
-ax.plot(x_dense, y_dense, 'k-', linewidth=2, label=f'$f(x) = 1/x$')
+ax.plot(x_dense, y_dense, 'k-', linewidth=2, label=f'$f(x) = x^2$')
 ax.set_xlim(a, b)
 ax.set_ylim(0, f(b) + 0.0001) # в заисимости от того монотонно возр или убыв функция меняйте f(b) на f(a) иначе график не войдет в границу
 ax.set_xlabel('x')
