@@ -24,8 +24,9 @@ ax.set_ylabel('y')
 ax.set_title('Верхние и нижние суммы Дарбу')
 ax.grid(True)
 
-# прямоугольники 
+# прямоугольники upper - верхний интеграл, lower - нижние интеграл, а yellow - чтото среднее np.average() 
 upper_rects = ax.bar([], [], width=0, align='edge', alpha=0.5, color='red', edgecolor='darkred', label='Верхняя сумма')
+yellow_rects = ax.bar([], [], width=0, align='edge', alpha=0.5, color='yellow', label='Что-то среднее между')
 lower_rects = ax.bar([], [], width=0, align='edge', alpha=0.5, color='blue', edgecolor='darkblue', label='Нижняя сумма')
 
 # отображение сумм и их разности через текст
@@ -39,7 +40,7 @@ ax_slider = plt.axes([0.2, 0.05, 0.6, 0.03])
 slider = Slider(ax_slider, "Шаг дискретизации Δ(5 - 100)", valmin=5, valmax=100, valinit=5, valstep=1)
 
 def update(val):
-    global upper_rects, lower_rects
+    global upper_rects, lower_rects, yellow_rects
     
     delta = int(slider.val)
     
@@ -49,6 +50,7 @@ def update(val):
     
     lower_heights = np.zeros(delta)
     upper_heights = np.zeros(delta)
+    yellow_heights = np.zeros(delta)
     
     
     #для каждого частичного сегмента [x_i_1, x_i_2] найдем min & max 
@@ -60,17 +62,21 @@ def update(val):
         
         lower_heights[i] = np.min(y_sub)
         upper_heights[i] = np.max(y_sub)
-    
+        yellow_heights[i] = np.average(y_sub)
+        
     # очистка старых прямоугольников если они были
     for rect in upper_rects: rect.remove()
     for rect in lower_rects: rect.remove()
+    for rect in yellow_rects: rect.remove()
     
     # апдейт отрисовки
     upper_rects_new = ax.bar(x_edges[:-1], upper_heights, width=dx, align='edge', alpha=0.5, color='red', edgecolor='darkred', label='Верхняя сумма')
+    yellow_rects_new = ax.bar(x_edges[:-1], yellow_heights, width=dx, align='edge', alpha=0.5, color='yellow', label='Что-то среднее между')
     lower_rects_new = ax.bar(x_edges[:-1], lower_heights, width=dx, align='edge', alpha=0.5, color='blue', edgecolor='darkblue', label='Нижняя сумма')
-
+    
     # обновляем ссылки глобально для следующего апдейта
     upper_rects = upper_rects_new
+    yellow_rects = yellow_rects_new
     lower_rects = lower_rects_new
     
     # вычисляем суммы
